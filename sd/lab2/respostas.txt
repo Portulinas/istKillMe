@@ -1,0 +1,11 @@
+2) O Mutex serve para que, enquanto uma jogada é feita, nenhuma outra thread possa mexer no tabuleiro, para que haja coerencia em acessos paralelos ao tabuleiro.
+
+4)
+a) ttt_clnt.c && ttt_svc.c
+b) ttt_clnt.c
+c)
+  SERVIDOR - ttt_svc.c ttt_server.c
+  CLIENTE - ttt_clnt.c ttt_client.c
+  AMBOS - ttt.h ttt_xdr.c
+d) tcp_client.c
+e) UDP/IP
