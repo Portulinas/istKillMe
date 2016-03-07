@@ -1,0 +1,382 @@
+# =============================================================================            
+#Tipo Direcao
+# =============================================================================
+# =============================================================================            
+#Reconhecedores
+# =============================================================================
+e_direcao(direcao):
+    """
+    e_direcao : universal --> logico
+    e_direcao(arg) tem o valor verdadeiro se o arg for do tipo direcao e falso caso
+    contrario.
+    """
+	
+e_norte(direcao):
+    """
+    e_norte : direcao --> logico
+    e_norte(arg) tem o valor verdadeiro se o arg for o elemento 'N'
+    e falso caso contrario.
+    """
+
+e_sul(direcao):
+    """
+    e_norte : direcao --> logico
+    e_norte(arg) tem o valor verdadeiro se o arg for o elemento 'S'
+    e falso caso contrario.
+    """    
+	
+e_leste(direcao):
+    """
+    e_norte : direcao --> logico
+    e_norte(arg) tem o valor verdadeiro se o arg for o elemento 'E'
+    e falso caso contrario.
+    """
+	
+def e_oeste(direcao):
+    """
+    e_norte : direcao --> logico
+    e_norte(arg) tem o valor verdadeiro se o arg for o elemento 'W'
+    e falso caso contrario..
+    """      
+	
+e_nordeste(direcao):
+    """
+    e_norte : direcao --> logico
+    e_norte(arg) tem o valor verdadeiro se o arg for o elemento 'NE'
+    e falso caso contrario.
+    """      
+
+def e_noroeste(direcao):
+    """
+    e_norte : direcao --> logico
+    e_norte(arg) tem o valor verdadeiro se o arg for o elemento 'NW'
+    e falso caso contrario.
+    """
+	
+def e_sudeste(direcao):
+    """
+    e_norte : direcao --> logico
+    e_norte(arg) tem o valor verdadeiro se o arg for o elemento 'SE'
+    e falso caso contrario.
+    """      
+
+def e_sudoeste(direcao):
+    """
+    e_norte : direcao --> logico
+    e_norte(arg) tem o valor verdadeiro se o arg for o elemento 'SW'
+    e falso caso contrario.
+    """ 
+	
+# =============================================================================            
+#Teste
+# ============================================================================= 
+
+direcoes_iguais(d1,d2):
+    """
+    direcoes_iguais : direcao x direcao --> logico
+    direcoes_iguais(d1, d2) devolve o valor verdadeiro se as direcoes d1 e d2
+    forem iguais e falso caso contrario.
+    """
+	
+direcao_oposta(direcao):
+    """
+    direcao_oposta : direcao --> direcao
+    direcao_oposta(d) devolve a direcao oposta de d de acordo com a rosa dos 
+    ventos.
+    """
+	
+# =============================================================================            
+#Tipo Coordenada
+# =============================================================================
+# =============================================================================            
+#Construtor
+# =============================================================================
+
+coordenada(l,c,d):
+    """
+    coordenada: N0 x N0 x direcao --> coordenada
+    coordenada(l, c, d) tem como valor a coordenada referente a posicao (l,c) e direcao d.
+    """  
+	
+# =============================================================================            
+#Seletores
+# =============================================================================
+
+coord_linha(c):
+    """
+    coord_linha : coordenada --> N0
+    coord_linha(c) tem como valor a linha da coordenada.
+    """
+
+coord_coluna(c):
+    """
+    coord_coluna : coordenada --> N0
+    coord_coluna(c) tem como valor a coluna da coordenada.
+    """
+
+coord_direcao(c):
+    """
+    coord_direcao : coordenada --> N0
+    coord_direcao(c) tem como valor a direcao da coordenada.
+    """   
+	
+# =============================================================================            
+#Reconhecedores
+# =============================================================================
+
+e_coordenada(c):
+    """
+    e_coordenada : universal --> logico
+    e_coordenada(arg) tem o valor verdadeiro se o arg for do tipo coordenada e falso caso contrario.
+    """
+	
+# =============================================================================            
+#Testes
+# =============================================================================
+
+coordenadas_iguais(c1,c2):
+    """
+    coordenadas_iguais : coordenada x coordenada --> logico
+    coordenadas_iguais(c1, c2) devolve o valor verdadeiro se as coordenadas c1 e c2 forem iguais e falso caso contrario.
+    """
+	
+# =============================================================================            
+#Outras Operacoes
+# =============================================================================
+
+coordenada_string(c):
+    """
+    coordenada_string : coordenada --> string
+    coordenada_string(c) devolve a representacao externa de c: uma cadeia de caracteres iniciada por parentesis esquerdo '(' seguido pelo numero da linha e da coluna, separados por virgula e um espaco ',' , seguido por parentesis direito e traco ')-', apos os quais se apresenta a direcao.
+    """
+	
+# =============================================================================            
+#Tipo Grelha
+# =============================================================================
+# =============================================================================            
+#Construtor
+# =============================================================================
+
+grelha(lst):
+    """
+    grelha : lista de strings --> grelha
+    grelha(lst) tem como valor uma grelha m x n, em que m e o numero de elements da lista lst e n o numero de carateres de cada string na lista.
+    """
+	
+# =============================================================================            
+#Seletores
+# =============================================================================
+
+grelha_nr_linhas(g):
+    """
+    grelha_nr_linhas : grelha --> N 
+    grelha_nr_linhas(g) devolve o numero de linhas da grelha g.
+    """
+	
+grelha_nr_colunas(g):
+    """
+    grelha_nr_colunas : grelha --> N 
+    grelha_nr_colunas(g) devolve o numero de colunas da grelha g.
+    """
+	
+grelha_elemento(g,l,c):
+    """
+    grelha_elementos : grelha x N0 x N0 --> carater
+    grelha_elementos(g,l,c) devolve o carater que esta na posicao(l,c) da grelha g.
+    """
+	
+grelha_linha(g,c):
+    """
+    grelha_linha : grelha x coordenada --> string
+    grelha_linha(g, c) devolve a cadeia de caracteres que corresponde a linha
+    definida segundo a direcao dada pela coordenada c, e que inclui a posicao
+    dada pela mesma coordenada.    
+    """
+	
+cadeia_norte(g,c):
+    """
+    cadeia_norte : grelha x coordenada --> string
+    cadeia_norte(g, c) devolve a cadeia de caracteres que corresponde a linha
+    definida segundo a direcao 'N' dada pela coordenada c, e que inclui a posicao
+    dada pela mesma coordenada.    
+    """  
+
+cadeia_sul(g,c):
+    """
+    cadeia_sul : grelha x coordenada --> string
+    cadeia_sul(g, c) devolve a cadeia de caracteres que corresponde a linha
+    definida segundo a direcao 'S' dada pela coordenada c, e que inclui a posicao
+    dada pela mesma coordenada.
+    """
+	
+cadeia_leste(g,c):
+    """
+    cadeia_lest : grelha x coordenada --> string
+    cadeia_leste(g, c) devolve a cadeia de caracteres que corresponde a linha
+    definida segundo a direcao 'E' dada pela coordenada c, e que inclui a posicao
+    dada pela mesma coordenada.
+    """
+	
+cadeia_oeste(g,c):
+    """
+    cadeia_oeste : grelha x coordenada --> string
+    cadeia_oeste(g, c) devolve a cadeia de caracteres que corresponde a linha
+    definida segundo a direcao 'W' dada pela coordenada c, e que inclui a posicao
+    dada pela mesma coordenada.
+    """
+	
+cadeia_nordeste(g,c):
+    """
+    cadeia_nordeste : grelha x coordenada --> string
+    cadeia_nordeste(g, c) devolve a cadeia de caracteres que corresponde a linha
+    definida segundo a direcao 'NE' dada pela coordenada c, e que inclui a posicao
+    dada pela mesma coordenada.
+    """
+	
+cadeia_noroeste(g,c):
+    """
+    cadeia_noroeste : grelha x coordenada --> string
+    cadeia_noroeste(g, c) devolve a cadeia de caracteres que corresponde a linha
+    definida segundo a direcao 'NW' dada pela coordenada c, e que inclui a posicao
+    dada pela mesma coordenada.
+    """
+	
+cadeia_sudeste(g,c):
+    """
+    cadeia_sudeste : grelha x coordenada --> string
+    cadeia_sudeste(g, c) devolve a cadeia de caracteres que corresponde a linha
+    definida segundo a direcao 'SE' dada pela coordenada c, e que inclui a posicao
+    dada pela mesma coordenada.
+    """
+
+cadeia_sudoeste(g,c):
+    """
+    cadeia_sudoeste : grelha x coordenada --> string
+    cadeia_sudoeste(g, c) devolve a cadeia de caracteres que corresponde a linha
+    definida segundo a direcao 'SW' dada pela coordenada c, e que inclui a posicao
+    dada pela mesma coordenada.
+    """
+	
+# =============================================================================
+#Reconhecedor
+# =============================================================================
+
+e_grelha(g):
+    """
+    e_grelha : universal --> logico
+    e_grelha(arg) tem o valor verdadeiro se o arg for do tipo grelha e falso caso
+    contrario.
+    """
+	
+# =============================================================================
+#Teste
+# =============================================================================
+
+grelhas_iguais(g1, g2):
+    """
+    grelha : grelha --> logico
+    grelhas_iguais(g1, g2) devolve o valor verdadeiro se as grelhas forem iguais
+    e falso caso contrario.
+    """
+	
+# =============================================================================            
+#Tipo Resposta
+# =============================================================================
+# =============================================================================            
+#Construtor
+# =============================================================================
+	
+resposta(lst):
+    """
+    resposta : lista de tuplos(string, coordenada) --> resposta
+    resposta(lst) tem como valor a resposta que contem cada um dos tuplos que
+    compoem a lista lst, ordenados por ordem alfabetica.
+    """
+	
+resposta_ordem_alfabetica(res):
+	"""
+	resposta_ordem_alfabetica: lista de tuplos(string,coordenada) --> resposta ordenada alfabeticamente
+	resposta_ordem_alfabetica(res) tem como valor a resposta ordenada alfabeticamente pelas strings do tuplo
+	"""
+	
+troca(palavra1,palavra2):
+	
+tamanho_menor(palavra1,palavra2):
+
+resposta_elemento(resposta,n):
+    """
+    resposta_elemento : resposta x N0 --> tuplo(string, coordenada)
+    resposta_elemento(res, n) devolve o enesimo elemento da resposta res.
+    """
+
+def resposta_tamanho(resposta):
+    """
+    resposta_tamanho : resposta --> N0
+    resposta_tamanho(res) devolve o numero de elementos da resposta res.
+    """
+	
+def acrescenta_elemento(r,s,c):
+    """
+    acrescenta_elemento : resposta x string x coordenada --> resposta
+    acrescenta_elemento(r, s, c) devolve a resposta r com mais um elemento
+    - o tuplo (s, c).
+    """
+	
+def e_resposta(arg):
+    """
+    e_resposta : universal --> logico
+    e_resposta(arg) tem o valor verdadeiro se o arg for do tipo resposta e falso
+    caso contrario.
+    """
+	
+respostas_iguais(r1,r2):
+    """
+    respostas_iguais : resposta x resposta --> logico
+    respostas_iguais(r1, r2) devolve o valor verdadeiro se as respostas r1 e r2
+    contiverem os mesmos tuplos e falso caso contrario.
+    """
+
+resposta_string (res1):
+    """
+    resposta_string : resposta --> string
+    resposta_string(res) devolve a representacao externa da resposta res: uma
+    cadeia de caracteres iniciada pelo parentesis recto esquerdo '[' e que contem
+    a descricao de cada elemento da resposta separados por virgulas e espaco ',
+    ', terminando com o parentesis recto direito ']'.
+    Cada elemento e representado por: '<'PALAVRA':'COORDENADA'>',
+    em que PALAVRA e a palavra encontrada, e COORDENADA a coordenada
+    onde se encontra a palavra.
+    """
+	
+##############################################################
+##############################################################
+	
+procura_palavras_numa_direcao(grelha, lst_palavras, direcao):
+	""" 
+	procura_palavras_numa_direcao: grelha x lista de palavras x direcao --> resposta
+	procura_palavras_numa_direcao(grelha, lst_palavras, direcao) devolve uma resposta
+	"""
+	
+procura_norte_sul(grelha, lst_palavras, direcao):
+	"""
+	procura_norte_sul: grelha x lista de palavras x direcao --> resposta
+	procura_norte_sul(grelha, lst_palavras, direcao) recebe uma direcao 'N' ou 'S' e devolve uma resposta para essas direcoes
+	"""
+	
+procura_leste_oeste(grelha, lst_palavras, direcao):
+	"""
+	procura_norte_sul: grelha x lista de palavras x direcao --> resposta
+	procura_norte_sul(grelha, lst_palavras, direcao) recebe uma direcao 'W' ou 'S' e devolve uma resposta para essas direcoes
+	"""
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+troca,tamanho_menor,
+	

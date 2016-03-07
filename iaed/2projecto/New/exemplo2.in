@@ -1,0 +1,20 @@
+10
+send 0 1 XXX1111
+send 0 2 XXX1111
+send 0 3 XXX1111
+send 0 4 XXX1111
+send 0 5 XXX1111
+send 0 6 XXX1111
+send 0 7 XXX1111
+send 3 8 XXX1111
+send 1 8 XXX1111
+send 2 8 XXX1111
+send 7 8 XXX1111
+send 0 8 AXX1112
+send 0 8 CXX1113
+send 0 8 BXX1113
+send 0 8 0XX1114
+listsorted 8
+kill 8
+list 8
+quit

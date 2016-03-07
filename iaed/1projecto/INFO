@@ -1,0 +1,54 @@
+Observações:
+- Organizada a pasta para o projecto;
+
+
+28		| Estados Membros	| Abreviatura
+
+1		| Alemanha			| DE
+2		| Áustria			| AT
+3		| Bélgica			| BE
+4		| Bugária			| BG
+5		| Chipre			| CY
+6		| Croácia			| HR
+7		| Dinamarca			| DK
+8		| Eslováquia			| SK
+9		| Eslovénia			| SI
+10		| Espanha			| ES
+11		| Estónia			| EE
+12		| Finlândia			| FI
+13		| França			| FR
+14		| Grécia			| GR
+15		| Hungria			| HU
+16		| Irlanda			| IE
+17		| Itália			| IT
+18		| Letónia			| LV
+19		| Lituância			| LT
+20		| Luxemburgo		| LU
+21		| Malta				| MT
+22		| Países Baixos		| NL
+23		| Polónia			| PL
+24		| Portugal			| PT
+25		| Reino Unido		| GB
+26		| República Checa	| CZ
+27		| Roménia			| RO
+28		| Suécia			| SE
+
+12 		| PPE													| Abreviatura
+1		| European People’s Party 								|EPP
+2		| Party of European Socialists 							|PES
+3		| Alliance of Liberals and Democrats for Europe Party	|LDE
+4		| European Green Party 									|EGP
+5		| Alliance of European Conservatives and Reformists		|ECR
+6		| European Left Party									|ELP
+7		| Movement for a Europe of Liberties and Democracy 		|ELD
+8		| European Democrat Party 								|EDP
+9		| European Alliance for Freedom 						|EAF
+10		| Alliance of European National Movements 				|EMN
+11		| European Christian Political Movement 				|ECP
+12		| Alliance for a Europe of Democracies					|AED
+
+Funções	| Objetivo																	| Argumentos
++		| Adiciona votos a um PPE num dado país										| Estado membro, PPE, Votos
+m		| Pedir informação sobre deputados já eleitos por PPE num dado Estado-membro| Estado membro
+e		| Pedir informação sobre deputados já eleitos no total da UE				|
+x		| Termina o programa														|

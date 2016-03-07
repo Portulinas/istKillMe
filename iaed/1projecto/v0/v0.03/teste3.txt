@@ -1,0 +1,4 @@
+   EPP PES LDE EGP ECR ELP ELD EDP EAF EMN ECP AED
+BE  10   0   0   0  11   0   0   0   0   0   0   0
+   EPP PES LDE EGP ECR ELP ELD EDP EAF EMN ECP AED
+FI   6   0   0   0   7   0   0   0   0   0   0   0

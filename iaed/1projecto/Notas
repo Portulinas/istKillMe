@@ -1,0 +1,18 @@
+Objectivo:	
+Determinar o numero de mandatos a atribuir a cada um dos 
+PPEs dadas as votacoes de cada Estado-membro e o numero de mandatos a que
+cada Estado-membro tem direito.
+
+Funcoes:
+
+'+' -> adicionaVotos(Estado-membro, PPE, #votos)
+'m' -> deputadosEleitosEM(Estado-membro)
+'e' -> deputadosEleitosUE(Estado-membro)
+'x' -> termina o programa
+
+
+28 Estados membros
+Divisao de 751 eurodeputados
+12 PPEs
+
+

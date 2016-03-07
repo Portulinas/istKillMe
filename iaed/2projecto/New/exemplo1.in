@@ -1,0 +1,28 @@
+2
+send 0 1 If only you knew the power of the Dark Side.
+send 0 1 Obi-Wan never told you what happened to your father.
+process 1
+process 1
+send 1 0 He told me enough! He told me you killed him!
+process 0
+send 0 1 No, I am your father.
+process 1
+send 1 0 No. No! That's not true! That's impossible!
+process 0
+send 0 1 Search your feelings; you know it to be true!
+process 1
+send 1 0 NOOOOOOO! NOOOOOOOO!!!
+process 0
+send 0 1 Luke, you can destroy the Emperor.
+send 0 1 He has foreseen this.
+send 0 1 It is your destiny!
+send 0 1 Join me, and together, we can rule the galaxy as father and son!
+send 0 1 Come with me. It is the only way.
+process 1
+process 1
+process 1
+process 1
+process 1
+list 0
+list 1
+quit

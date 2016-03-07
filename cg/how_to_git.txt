@@ -1,0 +1,48 @@
+1// Criar uma Conta
+Ir a https://bitbucket.org/account/signup/
+Criar uma 'Personal Account'
+Mandam-me o vosso username
+
+2// Instalação Git (Windows/Mac)
+Ir a https://confluence.atlassian.com/bitbucket/set-up-git-744723531.html
+Seguir as instruções
+
+3// Sincronizar o git no vosso computador
+Criam a pasta onde querem ter o repositório:
+	cd ~
+	mkdir repositorio
+	
+Acedem à pasta através do bash/terminal do git:
+	cd repositorio
+	
+Clonam o repositorio git para a vossa pasta:
+	git clone https://Portulinas@bitbucket.org/the_bisties/computer-graphics.git
+	(user e password da conta que criaram no bitbucket)
+	ls
+	
+Se forem à pasta onde está o repositorio vao reparar que já existe lá uma pasta lab1
+//Adicionem o vosso código do primeiro lab
+	Copiam o vosso .cpp para a pasta repositorio/lab1
+	git add lab1_nome.cpp
+//Verificar o estado do repositorio
+	git status
+Vao reparar que está um ficheiro está na 'staging area', este estado permite que voces alterem o vosso cpp antes de ser enviado com alterações para o servidor.
+//Commit no ficheiro
+	git commit -m 'Ficheiro lab1_nome.cpp'
+Aqui fazemos commit ao ficheiro OU SEJA o servidor guarda o log das mudanças feitas no repositório em ambiente LOCAL, -m é a descrição da vossa alteração.
+//Push do ficheiro
+	git push origin master
+As alterações são efectuadas no servidor onde o repositório está alojado.
+
+<<
+commit: adding changes to the local repository
+push: to transfer the last commit(s) to a remote server
+>>
+
+//Para fazerem refresh ao repositório (verificar alterações)
+	git pull --all
+
+(mais informações - https://confluence.atlassian.com/bitbucket/create-a-git-repository-759857290.html)
+qualquer duvida perguntem ou procurem na net.
+
+	
