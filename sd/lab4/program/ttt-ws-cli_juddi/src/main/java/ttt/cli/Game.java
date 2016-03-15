@@ -61,6 +61,10 @@ public class Game {
 	public Game(TTT port) {
 		this.ttt = port;
 		keyboardSc = new Scanner(System.in);
+		System.out.println("Seleccione um titulo de jogo: ");
+		String titulo = new Scanner(System.in).nextLine();
+		ttt.tituloJogo(titulo);
+		
 	}
 
 	public int readPlay() {
@@ -71,7 +75,7 @@ public class Game {
 							+ "where you want to place your %c (or 0 to refresh the board): %n",
 					player, (player == 1) ? 'X' : 'O');
 			play = keyboardSc.nextInt();
-		} while (play > 9 || play < 0);
+		} while (play > 10 || play < 0);
 		return play;
 	}
 
@@ -84,10 +88,17 @@ public class Game {
 			do {
 				System.out.println(ttt.currentBoard());
 				play = readPlay();
-				if (play != 0) {
+				
+				if(play != 0 && play != 10) 
+				{
 					playAccepted = ttt.play(--play / 3, play % 3, player);
 					if (!playAccepted)
 						System.out.println("Invalid play! Try again.");
+				}else if(play == 10){
+					playAccepted = false;
+					System.out.println("Novo titulo: ");
+					String titulo = new Scanner(System.in).nextLine();
+					ttt.tituloJogo(titulo);
 				} else {
 					playAccepted = false;
 				}

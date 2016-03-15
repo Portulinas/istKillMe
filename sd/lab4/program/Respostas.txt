@@ -1,0 +1,24 @@
+1.	O código é mapeado implicitamente através das generated-sources criadas.
+2.	O tipo de argumentos é especificado em  element="tns:nomeFunçao" que depois
+	é especificado no ficheiro xsd=1 criado pelo servidor.
+3.
+	a)	Ambos os ficheiros contêm dados sobre as funções que existem no ttt, e que
+		argumentos recebem.
+	b)	No ttt.x as funções especificam o seu tipo de retorno enquanto no WSLD apenas
+		especificam a mensagem que contém o tipo de retorno em XSD.
+	No WSDL existe também o nome do serviço e respectivamente a localização do servidor
+	(para efectuar o binding), enquanto no Sun RPC o ficheiro ttt.x tem o nome do programa
+	e o respectivo processo onde está a ser executado.
+4. 	Objectos criados:
+	Estes ficheiros são criados em código java para lidar com o webservice (ou seja, para 
+	fazer com que o cliente se consiga ligar/comunicar com o serviço), a informação do servidor
+	está codificada em wsdl.
+	- CheckWinner.java			- Verifica argumentos da função CheckWinner
+	- CheckWinnerResponse.java	- Verifica a resposta da função CheckWinner
+	- CurrentBoard.java			- Verifica argumentos da função CurrentBoard
+	- CurrentBoardResponse.java	- Verifica a resposta da função CurrentBoard
+	- Play.java					- Verifica argumentos da função Play
+	- PlayResponse.java			- Verifica a resposta da função Play
+	- TTT.java					- Verifica as funções usadas pelo jogo (acima referidas)
+	- TTTImplService.java		- Contém a informação sobre o servidor de nomes sobre
+								  a qual vai comunicar

@@ -12,12 +12,14 @@ public class TTTImpl implements TTT {
 	};
 	private int nextPlayer = 0;
 	private int numPlays = 0;
+	private String titulo = "";
 
 	public String currentBoard() {
+		String t = titulo;
 		String s = "\n\n " + board[0][0] + " | " + board[0][1] + " | " + board[0][2] + " " + "\n---+---+---\n "
 				+ board[1][0] + " | " + board[1][1] + " | " + board[1][2] + " " + "\n---+---+---\n " + board[2][0]
 				+ " | " + board[2][1] + " | " + board[2][2] + " \n";
-		return s;
+		return "\n\tTitle: " + t + s;
 	}
 
 	public boolean play(int row, int column, int player) {
@@ -36,6 +38,10 @@ public class TTTImpl implements TTT {
 		nextPlayer = (nextPlayer + 1) % 2;
 		numPlays++;
 		return true;
+	}
+	
+	public void tituloJogo(String new_titulo){
+		titulo = new_titulo;
 	}
 
 	public int checkWinner() {
