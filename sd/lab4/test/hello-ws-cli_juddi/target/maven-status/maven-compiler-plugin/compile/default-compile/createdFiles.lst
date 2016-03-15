@@ -1,0 +1,7 @@
+example\ws\ObjectFactory.class
+example\ws\SayHello.class
+example\ws\cli\HelloClient.class
+example\ws\HelloImplService.class
+example\ws\Hello.class
+example\ws\package-info.class
+example\ws\SayHelloResponse.class
