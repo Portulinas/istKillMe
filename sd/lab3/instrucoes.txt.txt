@@ -1,0 +1,8 @@
+A funcionalidade pedida foi implementar um novo método remoto chamado anularDuas, sem argumentos que anula as duas ultimas
+jogadas efectuadas por um jogador, para isso foi criado 2 arrays com 2 posições para cada jogada de cada jogador.
+deve-se compilar primeiramente o ttt-rmi-server e de seguida instalar da seguinte forma:
+mvn clean compile install
+e o mesmo para o ttt-rmi-client.
+para executar deve-se fazer:
+./target/appassembler/bin/ttt-rmi-server
+./target/appassembler/bin/ttt-rmi-client

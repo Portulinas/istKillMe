@@ -1,0 +1,9 @@
+1º Executar Servidor de Nomes jUDDI
+	juddi/bin/startup.bat ou startup.sh (windows or unix)
+2º Executar Servidor TTT
+	cd ttt-ws_juddi
+	mvn clean compile exec:java
+3º Executar Cliente TTT
+	cd ttt-ws-cli_juddi
+	mvn clean generate-sources compile exec:java
+4º Colocar nome de titulo de jogo

@@ -1,0 +1,3 @@
+4.i) Quando se usa RMI as classes remotas implementam Serializable, o que permite transferir dados sem a preocupação de conversao.
+ ii) TTTServer, TTTService, TTT - Servidor
+	 Game - Cliente
