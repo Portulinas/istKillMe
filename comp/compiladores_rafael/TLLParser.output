@@ -1,0 +1,3978 @@
+   0  $accept : file $end
+
+   1  file : decl listd
+
+   2  decl : var
+   3       | funct
+
+   4  var : qualif type tIDENTIFIER '=' expr
+   5      | type tIDENTIFIER '=' expr
+   6      | type tIDENTIFIER
+
+   7  type : tTYPEINT
+   8       | tTYPEREAL
+   9       | tTYPESTRING
+  10       | spectype
+
+  11  funct : qualif type tIDENTIFIER '(' varlist ')' fret
+  12        | qualif type tIDENTIFIER '(' varlist ')' fret block
+  13        | qualif type tIDENTIFIER '(' varlist ')' block
+  14        | type tIDENTIFIER '(' varlist ')' fret
+  15        | type tIDENTIFIER '(' varlist ')' fret block
+  16        | type tIDENTIFIER '(' varlist ')' block
+  17        | qualif tVOID tIDENTIFIER '(' varlist ')' fret
+  18        | qualif tVOID tIDENTIFIER '(' varlist ')' fret block
+  19        | qualif tVOID tIDENTIFIER '(' varlist ')' block
+  20        | tVOID tIDENTIFIER '(' varlist ')' fret
+  21        | tVOID tIDENTIFIER '(' varlist ')' fret block
+  22        | tVOID tIDENTIFIER '(' varlist ')' block
+  23        | qualif type tIDENTIFIER '(' varlist ')'
+  24        | type tIDENTIFIER '(' varlist ')'
+  25        | qualif tVOID tIDENTIFIER '(' varlist ')'
+  26        | tVOID tIDENTIFIER '(' varlist ')'
+
+  27  qualif : tPUBLIC
+  28         | tUSE
+
+  29  spectype : '<' tTYPEINT '>'
+  30           | '<' tTYPEREAL '>'
+  31           | '<' tTYPESTRING '>'
+  32           | '<' spectype '>'
+  33           | '[' tTYPEINT ']'
+  34           | '[' tTYPEREAL ']'
+  35           | '[' tTYPESTRING ']'
+  36           | '[' spectype ']'
+
+  37  fret : '=' literal
+
+  38  literal : tREAL
+  39          | tINTEGER
+  40          | string
+
+  41  string : tSTRING
+  42         | string tSTRING
+
+  43  block : tSTART_BLOCK decl listd tENDLINE stmt list tEND_BLOCK
+  44        | tSTART_BLOCK decl listd tEND_BLOCK
+  45        | tSTART_BLOCK stmt list tEND_BLOCK
+  46        | tSTART_BLOCK tEND_BLOCK
+
+  47  listd :
+  48        | listd tENDLINE decl
+
+  49  stmt : expr tPN
+  50       | expr '!'
+  51       | expr
+  52       | tWHILE expr tDO stmt
+  53       | tWHILE expr tDO stmt tELSE stmt
+  54       | tFOR expr ';' expr ';' expr tDO stmt
+  55       | tFOR varlist ';' expr ';' expr tDO stmt
+  56       | tDO stmt tUNTIL expr
+  57       | tDO stmt tUNTIL expr tELSE stmt
+  58       | block
+  59       | tRETURN
+  60       | tNEXT
+  61       | tSTOP
+  62       | tNEXT tINTEGER
+  63       | tSTOP tINTEGER
+  64       | tIF expr tTHEN stmt
+  65       | tIF expr tTHEN stmt tELSE stmt
+  66       | tIF expr tTHEN stmt elsif
+
+  67  elsif : tELSIF expr tTHEN stmt elsif
+  68        | tELSIF expr tTHEN stmt
+  69        | tELSIF expr tTHEN stmt tELSE stmt
+
+  70  varlist : var
+  71          | varlist ',' var
+  72          |
+
+  73  exprlist : exprlist ',' expr
+  74           | expr
+  75           |
+
+  76  list :
+  77       | list tENDLINE stmt
+
+  78  expr : tINTEGER
+  79       | tIDENTIFIER '=' expr
+  80       | tREAL
+  81       | string
+  82       | tIDENTIFIER
+  83       | '+' expr
+  84       | '-' expr
+  85       | expr '?'
+  86       | expr '+' expr
+  87       | expr '-' expr
+  88       | expr '*' expr
+  89       | expr '/' expr
+  90       | expr '%' expr
+  91       | expr '<' expr
+  92       | expr '>' expr
+  93       | expr tGE expr
+  94       | expr tLE expr
+  95       | expr tNE expr
+  96       | expr tEQ expr
+  97       | expr '|' expr
+  98       | expr '&' expr
+  99       | '(' expr ')'
+ 100       | '@'
+ 101       | expr '^' expr
+ 102       | tIDENTIFIER '(' exprlist ')'
+ 103       | '@' '=' expr
+ 104       | '@' '(' exprlist ')'
+ 105       | tIDENTIFIER '[' expr ']'
+ 106       | tIDENTIFIER '[' expr ']' '=' expr
+ 107       | '#' expr
+
+state 0
+	$accept : . file $end  (0)
+
+	tUSE  shift 1
+	tPUBLIC  shift 2
+	tTYPEINT  shift 3
+	tTYPEREAL  shift 4
+	tTYPESTRING  shift 5
+	tVOID  shift 6
+	'<'  shift 7
+	'['  shift 8
+	.  error
+
+	file  goto 9
+	decl  goto 10
+	funct  goto 11
+	var  goto 12
+	qualif  goto 13
+	type  goto 14
+	spectype  goto 15
+
+
+state 1
+	qualif : tUSE .  (28)
+
+	.  reduce 28
+
+
+state 2
+	qualif : tPUBLIC .  (27)
+
+	.  reduce 27
+
+
+state 3
+	type : tTYPEINT .  (7)
+
+	.  reduce 7
+
+
+state 4
+	type : tTYPEREAL .  (8)
+
+	.  reduce 8
+
+
+state 5
+	type : tTYPESTRING .  (9)
+
+	.  reduce 9
+
+
+state 6
+	funct : tVOID . tIDENTIFIER '(' varlist ')' fret  (20)
+	funct : tVOID . tIDENTIFIER '(' varlist ')' fret block  (21)
+	funct : tVOID . tIDENTIFIER '(' varlist ')' block  (22)
+	funct : tVOID . tIDENTIFIER '(' varlist ')'  (26)
+
+	tIDENTIFIER  shift 16
+	.  error
+
+
+state 7
+	spectype : '<' . tTYPEINT '>'  (29)
+	spectype : '<' . tTYPEREAL '>'  (30)
+	spectype : '<' . tTYPESTRING '>'  (31)
+	spectype : '<' . spectype '>'  (32)
+
+	tTYPEINT  shift 17
+	tTYPEREAL  shift 18
+	tTYPESTRING  shift 19
+	'<'  shift 7
+	'['  shift 8
+	.  error
+
+	spectype  goto 20
+
+
+state 8
+	spectype : '[' . tTYPEINT ']'  (33)
+	spectype : '[' . tTYPEREAL ']'  (34)
+	spectype : '[' . tTYPESTRING ']'  (35)
+	spectype : '[' . spectype ']'  (36)
+
+	tTYPEINT  shift 21
+	tTYPEREAL  shift 22
+	tTYPESTRING  shift 23
+	'<'  shift 7
+	'['  shift 8
+	.  error
+
+	spectype  goto 24
+
+
+state 9
+	$accept : file . $end  (0)
+
+	$end  accept
+
+
+state 10
+	file : decl . listd  (1)
+	listd : .  (47)
+
+	.  reduce 47
+
+	listd  goto 25
+
+
+state 11
+	decl : funct .  (3)
+
+	.  reduce 3
+
+
+state 12
+	decl : var .  (2)
+
+	.  reduce 2
+
+
+state 13
+	var : qualif . type tIDENTIFIER '=' expr  (4)
+	funct : qualif . type tIDENTIFIER '(' varlist ')' fret  (11)
+	funct : qualif . type tIDENTIFIER '(' varlist ')' fret block  (12)
+	funct : qualif . type tIDENTIFIER '(' varlist ')' block  (13)
+	funct : qualif . tVOID tIDENTIFIER '(' varlist ')' fret  (17)
+	funct : qualif . tVOID tIDENTIFIER '(' varlist ')' fret block  (18)
+	funct : qualif . tVOID tIDENTIFIER '(' varlist ')' block  (19)
+	funct : qualif . type tIDENTIFIER '(' varlist ')'  (23)
+	funct : qualif . tVOID tIDENTIFIER '(' varlist ')'  (25)
+
+	tTYPEINT  shift 3
+	tTYPEREAL  shift 4
+	tTYPESTRING  shift 5
+	tVOID  shift 26
+	'<'  shift 7
+	'['  shift 8
+	.  error
+
+	type  goto 27
+	spectype  goto 15
+
+
+state 14
+	var : type . tIDENTIFIER '=' expr  (5)
+	var : type . tIDENTIFIER  (6)
+	funct : type . tIDENTIFIER '(' varlist ')' fret  (14)
+	funct : type . tIDENTIFIER '(' varlist ')' fret block  (15)
+	funct : type . tIDENTIFIER '(' varlist ')' block  (16)
+	funct : type . tIDENTIFIER '(' varlist ')'  (24)
+
+	tIDENTIFIER  shift 28
+	.  error
+
+
+state 15
+	type : spectype .  (10)
+
+	.  reduce 10
+
+
+state 16
+	funct : tVOID tIDENTIFIER . '(' varlist ')' fret  (20)
+	funct : tVOID tIDENTIFIER . '(' varlist ')' fret block  (21)
+	funct : tVOID tIDENTIFIER . '(' varlist ')' block  (22)
+	funct : tVOID tIDENTIFIER . '(' varlist ')'  (26)
+
+	'('  shift 29
+	.  error
+
+
+state 17
+	spectype : '<' tTYPEINT . '>'  (29)
+
+	'>'  shift 30
+	.  error
+
+
+state 18
+	spectype : '<' tTYPEREAL . '>'  (30)
+
+	'>'  shift 31
+	.  error
+
+
+state 19
+	spectype : '<' tTYPESTRING . '>'  (31)
+
+	'>'  shift 32
+	.  error
+
+
+state 20
+	spectype : '<' spectype . '>'  (32)
+
+	'>'  shift 33
+	.  error
+
+
+state 21
+	spectype : '[' tTYPEINT . ']'  (33)
+
+	']'  shift 34
+	.  error
+
+
+state 22
+	spectype : '[' tTYPEREAL . ']'  (34)
+
+	']'  shift 35
+	.  error
+
+
+state 23
+	spectype : '[' tTYPESTRING . ']'  (35)
+
+	']'  shift 36
+	.  error
+
+
+state 24
+	spectype : '[' spectype . ']'  (36)
+
+	']'  shift 37
+	.  error
+
+
+state 25
+	file : decl listd .  (1)
+	listd : listd . tENDLINE decl  (48)
+
+	tENDLINE  shift 38
+	$end  reduce 1
+
+
+state 26
+	funct : qualif tVOID . tIDENTIFIER '(' varlist ')' fret  (17)
+	funct : qualif tVOID . tIDENTIFIER '(' varlist ')' fret block  (18)
+	funct : qualif tVOID . tIDENTIFIER '(' varlist ')' block  (19)
+	funct : qualif tVOID . tIDENTIFIER '(' varlist ')'  (25)
+
+	tIDENTIFIER  shift 39
+	.  error
+
+
+state 27
+	var : qualif type . tIDENTIFIER '=' expr  (4)
+	funct : qualif type . tIDENTIFIER '(' varlist ')' fret  (11)
+	funct : qualif type . tIDENTIFIER '(' varlist ')' fret block  (12)
+	funct : qualif type . tIDENTIFIER '(' varlist ')' block  (13)
+	funct : qualif type . tIDENTIFIER '(' varlist ')'  (23)
+
+	tIDENTIFIER  shift 40
+	.  error
+
+
+state 28
+	var : type tIDENTIFIER . '=' expr  (5)
+	var : type tIDENTIFIER .  (6)
+	funct : type tIDENTIFIER . '(' varlist ')' fret  (14)
+	funct : type tIDENTIFIER . '(' varlist ')' fret block  (15)
+	funct : type tIDENTIFIER . '(' varlist ')' block  (16)
+	funct : type tIDENTIFIER . '(' varlist ')'  (24)
+
+	'='  shift 41
+	'('  shift 42
+	$end  reduce 6
+	tEND_BLOCK  reduce 6
+	tENDLINE  reduce 6
+
+
+state 29
+	funct : tVOID tIDENTIFIER '(' . varlist ')' fret  (20)
+	funct : tVOID tIDENTIFIER '(' . varlist ')' fret block  (21)
+	funct : tVOID tIDENTIFIER '(' . varlist ')' block  (22)
+	funct : tVOID tIDENTIFIER '(' . varlist ')'  (26)
+	varlist : .  (72)
+
+	tUSE  shift 1
+	tPUBLIC  shift 2
+	tTYPEINT  shift 3
+	tTYPEREAL  shift 4
+	tTYPESTRING  shift 5
+	'<'  shift 7
+	'['  shift 8
+	')'  reduce 72
+	','  reduce 72
+
+	var  goto 43
+	varlist  goto 44
+	qualif  goto 45
+	type  goto 46
+	spectype  goto 15
+
+
+state 30
+	spectype : '<' tTYPEINT '>' .  (29)
+
+	.  reduce 29
+
+
+state 31
+	spectype : '<' tTYPEREAL '>' .  (30)
+
+	.  reduce 30
+
+
+state 32
+	spectype : '<' tTYPESTRING '>' .  (31)
+
+	.  reduce 31
+
+
+state 33
+	spectype : '<' spectype '>' .  (32)
+
+	.  reduce 32
+
+
+state 34
+	spectype : '[' tTYPEINT ']' .  (33)
+
+	.  reduce 33
+
+
+state 35
+	spectype : '[' tTYPEREAL ']' .  (34)
+
+	.  reduce 34
+
+
+state 36
+	spectype : '[' tTYPESTRING ']' .  (35)
+
+	.  reduce 35
+
+
+state 37
+	spectype : '[' spectype ']' .  (36)
+
+	.  reduce 36
+
+
+state 38
+	listd : listd tENDLINE . decl  (48)
+
+	tUSE  shift 1
+	tPUBLIC  shift 2
+	tTYPEINT  shift 3
+	tTYPEREAL  shift 4
+	tTYPESTRING  shift 5
+	tVOID  shift 6
+	'<'  shift 7
+	'['  shift 8
+	.  error
+
+	decl  goto 47
+	funct  goto 11
+	var  goto 12
+	qualif  goto 13
+	type  goto 14
+	spectype  goto 15
+
+
+state 39
+	funct : qualif tVOID tIDENTIFIER . '(' varlist ')' fret  (17)
+	funct : qualif tVOID tIDENTIFIER . '(' varlist ')' fret block  (18)
+	funct : qualif tVOID tIDENTIFIER . '(' varlist ')' block  (19)
+	funct : qualif tVOID tIDENTIFIER . '(' varlist ')'  (25)
+
+	'('  shift 48
+	.  error
+
+
+state 40
+	var : qualif type tIDENTIFIER . '=' expr  (4)
+	funct : qualif type tIDENTIFIER . '(' varlist ')' fret  (11)
+	funct : qualif type tIDENTIFIER . '(' varlist ')' fret block  (12)
+	funct : qualif type tIDENTIFIER . '(' varlist ')' block  (13)
+	funct : qualif type tIDENTIFIER . '(' varlist ')'  (23)
+
+	'='  shift 49
+	'('  shift 50
+	.  error
+
+
+state 41
+	var : type tIDENTIFIER '=' . expr  (5)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 61
+
+
+state 42
+	funct : type tIDENTIFIER '(' . varlist ')' fret  (14)
+	funct : type tIDENTIFIER '(' . varlist ')' fret block  (15)
+	funct : type tIDENTIFIER '(' . varlist ')' block  (16)
+	funct : type tIDENTIFIER '(' . varlist ')'  (24)
+	varlist : .  (72)
+
+	tUSE  shift 1
+	tPUBLIC  shift 2
+	tTYPEINT  shift 3
+	tTYPEREAL  shift 4
+	tTYPESTRING  shift 5
+	'<'  shift 7
+	'['  shift 8
+	')'  reduce 72
+	','  reduce 72
+
+	var  goto 43
+	varlist  goto 62
+	qualif  goto 45
+	type  goto 46
+	spectype  goto 15
+
+
+state 43
+	varlist : var .  (70)
+
+	.  reduce 70
+
+
+state 44
+	funct : tVOID tIDENTIFIER '(' varlist . ')' fret  (20)
+	funct : tVOID tIDENTIFIER '(' varlist . ')' fret block  (21)
+	funct : tVOID tIDENTIFIER '(' varlist . ')' block  (22)
+	funct : tVOID tIDENTIFIER '(' varlist . ')'  (26)
+	varlist : varlist . ',' var  (71)
+
+	')'  shift 63
+	','  shift 64
+	.  error
+
+
+state 45
+	var : qualif . type tIDENTIFIER '=' expr  (4)
+
+	tTYPEINT  shift 3
+	tTYPEREAL  shift 4
+	tTYPESTRING  shift 5
+	'<'  shift 7
+	'['  shift 8
+	.  error
+
+	type  goto 65
+	spectype  goto 15
+
+
+state 46
+	var : type . tIDENTIFIER '=' expr  (5)
+	var : type . tIDENTIFIER  (6)
+
+	tIDENTIFIER  shift 66
+	.  error
+
+
+state 47
+	listd : listd tENDLINE decl .  (48)
+
+	.  reduce 48
+
+
+state 48
+	funct : qualif tVOID tIDENTIFIER '(' . varlist ')' fret  (17)
+	funct : qualif tVOID tIDENTIFIER '(' . varlist ')' fret block  (18)
+	funct : qualif tVOID tIDENTIFIER '(' . varlist ')' block  (19)
+	funct : qualif tVOID tIDENTIFIER '(' . varlist ')'  (25)
+	varlist : .  (72)
+
+	tUSE  shift 1
+	tPUBLIC  shift 2
+	tTYPEINT  shift 3
+	tTYPEREAL  shift 4
+	tTYPESTRING  shift 5
+	'<'  shift 7
+	'['  shift 8
+	')'  reduce 72
+	','  reduce 72
+
+	var  goto 43
+	varlist  goto 67
+	qualif  goto 45
+	type  goto 46
+	spectype  goto 15
+
+
+state 49
+	var : qualif type tIDENTIFIER '=' . expr  (4)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 68
+
+
+state 50
+	funct : qualif type tIDENTIFIER '(' . varlist ')' fret  (11)
+	funct : qualif type tIDENTIFIER '(' . varlist ')' fret block  (12)
+	funct : qualif type tIDENTIFIER '(' . varlist ')' block  (13)
+	funct : qualif type tIDENTIFIER '(' . varlist ')'  (23)
+	varlist : .  (72)
+
+	tUSE  shift 1
+	tPUBLIC  shift 2
+	tTYPEINT  shift 3
+	tTYPEREAL  shift 4
+	tTYPESTRING  shift 5
+	'<'  shift 7
+	'['  shift 8
+	')'  reduce 72
+	','  reduce 72
+
+	var  goto 43
+	varlist  goto 69
+	qualif  goto 45
+	type  goto 46
+	spectype  goto 15
+
+
+state 51
+	expr : tINTEGER .  (78)
+
+	.  reduce 78
+
+
+state 52
+	expr : tREAL .  (80)
+
+	.  reduce 80
+
+
+state 53
+	expr : tIDENTIFIER . '=' expr  (79)
+	expr : tIDENTIFIER .  (82)
+	expr : tIDENTIFIER . '(' exprlist ')'  (102)
+	expr : tIDENTIFIER . '[' expr ']'  (105)
+	expr : tIDENTIFIER . '[' expr ']' '=' expr  (106)
+
+	'='  shift 70
+	'('  shift 71
+	'['  shift 72
+	$end  reduce 82
+	tDO  reduce 82
+	tUNTIL  reduce 82
+	tTHEN  reduce 82
+	tELSIF  reduce 82
+	tEND_BLOCK  reduce 82
+	tENDLINE  reduce 82
+	tELSE  reduce 82
+	'|'  reduce 82
+	'&'  reduce 82
+	tPN  reduce 82
+	'!'  reduce 82
+	tEQ  reduce 82
+	tNE  reduce 82
+	tGE  reduce 82
+	tLE  reduce 82
+	'>'  reduce 82
+	'<'  reduce 82
+	'+'  reduce 82
+	'-'  reduce 82
+	'*'  reduce 82
+	'/'  reduce 82
+	'%'  reduce 82
+	'^'  reduce 82
+	'?'  reduce 82
+	')'  reduce 82
+	']'  reduce 82
+	';'  reduce 82
+	','  reduce 82
+
+
+state 54
+	string : tSTRING .  (41)
+
+	.  reduce 41
+
+
+state 55
+	expr : '+' . expr  (83)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 73
+
+
+state 56
+	expr : '-' . expr  (84)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 74
+
+
+state 57
+	expr : '#' . expr  (107)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 75
+
+
+state 58
+	expr : '(' . expr ')'  (99)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 76
+
+
+state 59
+	expr : '@' .  (100)
+	expr : '@' . '=' expr  (103)
+	expr : '@' . '(' exprlist ')'  (104)
+
+	'='  shift 77
+	'('  shift 78
+	$end  reduce 100
+	tDO  reduce 100
+	tUNTIL  reduce 100
+	tTHEN  reduce 100
+	tELSIF  reduce 100
+	tEND_BLOCK  reduce 100
+	tENDLINE  reduce 100
+	tELSE  reduce 100
+	'|'  reduce 100
+	'&'  reduce 100
+	tPN  reduce 100
+	'!'  reduce 100
+	tEQ  reduce 100
+	tNE  reduce 100
+	tGE  reduce 100
+	tLE  reduce 100
+	'>'  reduce 100
+	'<'  reduce 100
+	'+'  reduce 100
+	'-'  reduce 100
+	'*'  reduce 100
+	'/'  reduce 100
+	'%'  reduce 100
+	'^'  reduce 100
+	'?'  reduce 100
+	')'  reduce 100
+	']'  reduce 100
+	';'  reduce 100
+	','  reduce 100
+
+
+state 60
+	string : string . tSTRING  (42)
+	expr : string .  (81)
+
+	tSTRING  shift 79
+	$end  reduce 81
+	tDO  reduce 81
+	tUNTIL  reduce 81
+	tTHEN  reduce 81
+	tELSIF  reduce 81
+	tEND_BLOCK  reduce 81
+	tENDLINE  reduce 81
+	tELSE  reduce 81
+	'|'  reduce 81
+	'&'  reduce 81
+	tPN  reduce 81
+	'!'  reduce 81
+	tEQ  reduce 81
+	tNE  reduce 81
+	tGE  reduce 81
+	tLE  reduce 81
+	'>'  reduce 81
+	'<'  reduce 81
+	'+'  reduce 81
+	'-'  reduce 81
+	'*'  reduce 81
+	'/'  reduce 81
+	'%'  reduce 81
+	'^'  reduce 81
+	'?'  reduce 81
+	')'  reduce 81
+	']'  reduce 81
+	';'  reduce 81
+	','  reduce 81
+
+
+state 61
+	var : type tIDENTIFIER '=' expr .  (5)
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	'|'  shift 80
+	'&'  shift 81
+	tEQ  shift 82
+	tNE  shift 83
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	$end  reduce 5
+	tEND_BLOCK  reduce 5
+	tENDLINE  reduce 5
+	')'  reduce 5
+	';'  reduce 5
+	','  reduce 5
+
+
+state 62
+	funct : type tIDENTIFIER '(' varlist . ')' fret  (14)
+	funct : type tIDENTIFIER '(' varlist . ')' fret block  (15)
+	funct : type tIDENTIFIER '(' varlist . ')' block  (16)
+	funct : type tIDENTIFIER '(' varlist . ')'  (24)
+	varlist : varlist . ',' var  (71)
+
+	')'  shift 95
+	','  shift 64
+	.  error
+
+
+state 63
+	funct : tVOID tIDENTIFIER '(' varlist ')' . fret  (20)
+	funct : tVOID tIDENTIFIER '(' varlist ')' . fret block  (21)
+	funct : tVOID tIDENTIFIER '(' varlist ')' . block  (22)
+	funct : tVOID tIDENTIFIER '(' varlist ')' .  (26)
+
+	tSTART_BLOCK  shift 96
+	'='  shift 97
+	$end  reduce 26
+	tEND_BLOCK  reduce 26
+	tENDLINE  reduce 26
+
+	fret  goto 98
+	block  goto 99
+
+
+state 64
+	varlist : varlist ',' . var  (71)
+
+	tUSE  shift 1
+	tPUBLIC  shift 2
+	tTYPEINT  shift 3
+	tTYPEREAL  shift 4
+	tTYPESTRING  shift 5
+	'<'  shift 7
+	'['  shift 8
+	.  error
+
+	var  goto 100
+	qualif  goto 45
+	type  goto 46
+	spectype  goto 15
+
+
+state 65
+	var : qualif type . tIDENTIFIER '=' expr  (4)
+
+	tIDENTIFIER  shift 101
+	.  error
+
+
+state 66
+	var : type tIDENTIFIER . '=' expr  (5)
+	var : type tIDENTIFIER .  (6)
+
+	'='  shift 41
+	')'  reduce 6
+	';'  reduce 6
+	','  reduce 6
+
+
+state 67
+	funct : qualif tVOID tIDENTIFIER '(' varlist . ')' fret  (17)
+	funct : qualif tVOID tIDENTIFIER '(' varlist . ')' fret block  (18)
+	funct : qualif tVOID tIDENTIFIER '(' varlist . ')' block  (19)
+	funct : qualif tVOID tIDENTIFIER '(' varlist . ')'  (25)
+	varlist : varlist . ',' var  (71)
+
+	')'  shift 102
+	','  shift 64
+	.  error
+
+
+state 68
+	var : qualif type tIDENTIFIER '=' expr .  (4)
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	'|'  shift 80
+	'&'  shift 81
+	tEQ  shift 82
+	tNE  shift 83
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	$end  reduce 4
+	tEND_BLOCK  reduce 4
+	tENDLINE  reduce 4
+	')'  reduce 4
+	';'  reduce 4
+	','  reduce 4
+
+
+state 69
+	funct : qualif type tIDENTIFIER '(' varlist . ')' fret  (11)
+	funct : qualif type tIDENTIFIER '(' varlist . ')' fret block  (12)
+	funct : qualif type tIDENTIFIER '(' varlist . ')' block  (13)
+	funct : qualif type tIDENTIFIER '(' varlist . ')'  (23)
+	varlist : varlist . ',' var  (71)
+
+	')'  shift 103
+	','  shift 64
+	.  error
+
+
+state 70
+	expr : tIDENTIFIER '=' . expr  (79)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 104
+
+
+state 71
+	expr : tIDENTIFIER '(' . exprlist ')'  (102)
+	exprlist : .  (75)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	')'  reduce 75
+	','  reduce 75
+
+	string  goto 60
+	exprlist  goto 105
+	expr  goto 106
+
+
+state 72
+	expr : tIDENTIFIER '[' . expr ']'  (105)
+	expr : tIDENTIFIER '[' . expr ']' '=' expr  (106)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 107
+
+
+state 73
+	expr : '+' expr .  (83)
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	.  reduce 83
+
+
+state 74
+	expr : '-' expr .  (84)
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	.  reduce 84
+
+
+state 75
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+	expr : '#' expr .  (107)
+
+	.  reduce 107
+
+
+state 76
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : '(' expr . ')'  (99)
+	expr : expr . '^' expr  (101)
+
+	'|'  shift 80
+	'&'  shift 81
+	tEQ  shift 82
+	tNE  shift 83
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	')'  shift 108
+	.  error
+
+
+state 77
+	expr : '@' '=' . expr  (103)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 109
+
+
+state 78
+	expr : '@' '(' . exprlist ')'  (104)
+	exprlist : .  (75)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	')'  reduce 75
+	','  reduce 75
+
+	string  goto 60
+	exprlist  goto 110
+	expr  goto 106
+
+
+state 79
+	string : string tSTRING .  (42)
+
+	.  reduce 42
+
+
+state 80
+	expr : expr '|' . expr  (97)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 111
+
+
+state 81
+	expr : expr '&' . expr  (98)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 112
+
+
+state 82
+	expr : expr tEQ . expr  (96)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 113
+
+
+state 83
+	expr : expr tNE . expr  (95)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 114
+
+
+state 84
+	expr : expr tGE . expr  (93)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 115
+
+
+state 85
+	expr : expr tLE . expr  (94)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 116
+
+
+state 86
+	expr : expr '>' . expr  (92)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 117
+
+
+state 87
+	expr : expr '<' . expr  (91)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 118
+
+
+state 88
+	expr : expr '+' . expr  (86)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 119
+
+
+state 89
+	expr : expr '-' . expr  (87)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 120
+
+
+state 90
+	expr : expr '*' . expr  (88)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 121
+
+
+state 91
+	expr : expr '/' . expr  (89)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 122
+
+
+state 92
+	expr : expr '%' . expr  (90)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 123
+
+
+state 93
+	expr : expr '^' . expr  (101)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 124
+
+
+state 94
+	expr : expr '?' .  (85)
+
+	.  reduce 85
+
+
+state 95
+	funct : type tIDENTIFIER '(' varlist ')' . fret  (14)
+	funct : type tIDENTIFIER '(' varlist ')' . fret block  (15)
+	funct : type tIDENTIFIER '(' varlist ')' . block  (16)
+	funct : type tIDENTIFIER '(' varlist ')' .  (24)
+
+	tSTART_BLOCK  shift 96
+	'='  shift 97
+	$end  reduce 24
+	tEND_BLOCK  reduce 24
+	tENDLINE  reduce 24
+
+	fret  goto 125
+	block  goto 126
+
+
+state 96
+	block : tSTART_BLOCK . decl listd tENDLINE stmt list tEND_BLOCK  (43)
+	block : tSTART_BLOCK . decl listd tEND_BLOCK  (44)
+	block : tSTART_BLOCK . stmt list tEND_BLOCK  (45)
+	block : tSTART_BLOCK . tEND_BLOCK  (46)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	tWHILE  shift 127
+	tFOR  shift 128
+	tDO  shift 129
+	tIF  shift 130
+	tUSE  shift 1
+	tPUBLIC  shift 2
+	tRETURN  shift 131
+	tNEXT  shift 132
+	tSTOP  shift 133
+	tTYPEINT  shift 3
+	tTYPEREAL  shift 4
+	tTYPESTRING  shift 5
+	tVOID  shift 6
+	tSTART_BLOCK  shift 96
+	tEND_BLOCK  shift 134
+	'<'  shift 7
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'['  shift 8
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	stmt  goto 135
+	decl  goto 136
+	funct  goto 11
+	var  goto 12
+	qualif  goto 13
+	expr  goto 137
+	block  goto 138
+	type  goto 14
+	spectype  goto 15
+
+
+state 97
+	fret : '=' . literal  (37)
+
+	tINTEGER  shift 139
+	tREAL  shift 140
+	tSTRING  shift 54
+	.  error
+
+	string  goto 141
+	literal  goto 142
+
+
+state 98
+	funct : tVOID tIDENTIFIER '(' varlist ')' fret .  (20)
+	funct : tVOID tIDENTIFIER '(' varlist ')' fret . block  (21)
+
+	tSTART_BLOCK  shift 96
+	$end  reduce 20
+	tEND_BLOCK  reduce 20
+	tENDLINE  reduce 20
+
+	block  goto 143
+
+
+state 99
+	funct : tVOID tIDENTIFIER '(' varlist ')' block .  (22)
+
+	.  reduce 22
+
+
+state 100
+	varlist : varlist ',' var .  (71)
+
+	.  reduce 71
+
+
+state 101
+	var : qualif type tIDENTIFIER . '=' expr  (4)
+
+	'='  shift 49
+	.  error
+
+
+state 102
+	funct : qualif tVOID tIDENTIFIER '(' varlist ')' . fret  (17)
+	funct : qualif tVOID tIDENTIFIER '(' varlist ')' . fret block  (18)
+	funct : qualif tVOID tIDENTIFIER '(' varlist ')' . block  (19)
+	funct : qualif tVOID tIDENTIFIER '(' varlist ')' .  (25)
+
+	tSTART_BLOCK  shift 96
+	'='  shift 97
+	$end  reduce 25
+	tEND_BLOCK  reduce 25
+	tENDLINE  reduce 25
+
+	fret  goto 144
+	block  goto 145
+
+
+state 103
+	funct : qualif type tIDENTIFIER '(' varlist ')' . fret  (11)
+	funct : qualif type tIDENTIFIER '(' varlist ')' . fret block  (12)
+	funct : qualif type tIDENTIFIER '(' varlist ')' . block  (13)
+	funct : qualif type tIDENTIFIER '(' varlist ')' .  (23)
+
+	tSTART_BLOCK  shift 96
+	'='  shift 97
+	$end  reduce 23
+	tEND_BLOCK  reduce 23
+	tENDLINE  reduce 23
+
+	fret  goto 146
+	block  goto 147
+
+
+state 104
+	expr : tIDENTIFIER '=' expr .  (79)
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	'|'  shift 80
+	'&'  shift 81
+	tEQ  shift 82
+	tNE  shift 83
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	$end  reduce 79
+	tDO  reduce 79
+	tUNTIL  reduce 79
+	tTHEN  reduce 79
+	tELSIF  reduce 79
+	tEND_BLOCK  reduce 79
+	tENDLINE  reduce 79
+	tELSE  reduce 79
+	tPN  reduce 79
+	'!'  reduce 79
+	')'  reduce 79
+	']'  reduce 79
+	';'  reduce 79
+	','  reduce 79
+
+
+state 105
+	exprlist : exprlist . ',' expr  (73)
+	expr : tIDENTIFIER '(' exprlist . ')'  (102)
+
+	')'  shift 148
+	','  shift 149
+	.  error
+
+
+state 106
+	exprlist : expr .  (74)
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	'|'  shift 80
+	'&'  shift 81
+	tEQ  shift 82
+	tNE  shift 83
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	')'  reduce 74
+	','  reduce 74
+
+
+state 107
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+	expr : tIDENTIFIER '[' expr . ']'  (105)
+	expr : tIDENTIFIER '[' expr . ']' '=' expr  (106)
+
+	'|'  shift 80
+	'&'  shift 81
+	tEQ  shift 82
+	tNE  shift 83
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	']'  shift 150
+	.  error
+
+
+state 108
+	expr : '(' expr ')' .  (99)
+
+	.  reduce 99
+
+
+state 109
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+	expr : '@' '=' expr .  (103)
+
+	'|'  shift 80
+	'&'  shift 81
+	tEQ  shift 82
+	tNE  shift 83
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	$end  reduce 103
+	tDO  reduce 103
+	tUNTIL  reduce 103
+	tTHEN  reduce 103
+	tELSIF  reduce 103
+	tEND_BLOCK  reduce 103
+	tENDLINE  reduce 103
+	tELSE  reduce 103
+	tPN  reduce 103
+	'!'  reduce 103
+	')'  reduce 103
+	']'  reduce 103
+	';'  reduce 103
+	','  reduce 103
+
+
+state 110
+	exprlist : exprlist . ',' expr  (73)
+	expr : '@' '(' exprlist . ')'  (104)
+
+	')'  shift 151
+	','  shift 149
+	.  error
+
+
+state 111
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr '|' expr .  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	'&'  shift 81
+	tEQ  shift 82
+	tNE  shift 83
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	$end  reduce 97
+	tDO  reduce 97
+	tUNTIL  reduce 97
+	tTHEN  reduce 97
+	tELSIF  reduce 97
+	tEND_BLOCK  reduce 97
+	tENDLINE  reduce 97
+	tELSE  reduce 97
+	'|'  reduce 97
+	tPN  reduce 97
+	'!'  reduce 97
+	')'  reduce 97
+	']'  reduce 97
+	';'  reduce 97
+	','  reduce 97
+
+
+state 112
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr '&' expr .  (98)
+	expr : expr . '^' expr  (101)
+
+	tEQ  shift 82
+	tNE  shift 83
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	$end  reduce 98
+	tDO  reduce 98
+	tUNTIL  reduce 98
+	tTHEN  reduce 98
+	tELSIF  reduce 98
+	tEND_BLOCK  reduce 98
+	tENDLINE  reduce 98
+	tELSE  reduce 98
+	'|'  reduce 98
+	'&'  reduce 98
+	tPN  reduce 98
+	'!'  reduce 98
+	')'  reduce 98
+	']'  reduce 98
+	';'  reduce 98
+	','  reduce 98
+
+
+state 113
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr tEQ expr .  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	$end  reduce 96
+	tDO  reduce 96
+	tUNTIL  reduce 96
+	tTHEN  reduce 96
+	tELSIF  reduce 96
+	tEND_BLOCK  reduce 96
+	tENDLINE  reduce 96
+	tELSE  reduce 96
+	'|'  reduce 96
+	'&'  reduce 96
+	tPN  reduce 96
+	'!'  reduce 96
+	tEQ  reduce 96
+	tNE  reduce 96
+	')'  reduce 96
+	']'  reduce 96
+	';'  reduce 96
+	','  reduce 96
+
+
+state 114
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr tNE expr .  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	$end  reduce 95
+	tDO  reduce 95
+	tUNTIL  reduce 95
+	tTHEN  reduce 95
+	tELSIF  reduce 95
+	tEND_BLOCK  reduce 95
+	tENDLINE  reduce 95
+	tELSE  reduce 95
+	'|'  reduce 95
+	'&'  reduce 95
+	tPN  reduce 95
+	'!'  reduce 95
+	tEQ  reduce 95
+	tNE  reduce 95
+	')'  reduce 95
+	']'  reduce 95
+	';'  reduce 95
+	','  reduce 95
+
+
+state 115
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr tGE expr .  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	$end  reduce 93
+	tDO  reduce 93
+	tUNTIL  reduce 93
+	tTHEN  reduce 93
+	tELSIF  reduce 93
+	tEND_BLOCK  reduce 93
+	tENDLINE  reduce 93
+	tELSE  reduce 93
+	'|'  reduce 93
+	'&'  reduce 93
+	tPN  reduce 93
+	'!'  reduce 93
+	tEQ  reduce 93
+	tNE  reduce 93
+	tGE  reduce 93
+	tLE  reduce 93
+	'>'  reduce 93
+	'<'  reduce 93
+	')'  reduce 93
+	']'  reduce 93
+	';'  reduce 93
+	','  reduce 93
+
+
+state 116
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr tLE expr .  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	$end  reduce 94
+	tDO  reduce 94
+	tUNTIL  reduce 94
+	tTHEN  reduce 94
+	tELSIF  reduce 94
+	tEND_BLOCK  reduce 94
+	tENDLINE  reduce 94
+	tELSE  reduce 94
+	'|'  reduce 94
+	'&'  reduce 94
+	tPN  reduce 94
+	'!'  reduce 94
+	tEQ  reduce 94
+	tNE  reduce 94
+	tGE  reduce 94
+	tLE  reduce 94
+	'>'  reduce 94
+	'<'  reduce 94
+	')'  reduce 94
+	']'  reduce 94
+	';'  reduce 94
+	','  reduce 94
+
+
+state 117
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr '>' expr .  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	$end  reduce 92
+	tDO  reduce 92
+	tUNTIL  reduce 92
+	tTHEN  reduce 92
+	tELSIF  reduce 92
+	tEND_BLOCK  reduce 92
+	tENDLINE  reduce 92
+	tELSE  reduce 92
+	'|'  reduce 92
+	'&'  reduce 92
+	tPN  reduce 92
+	'!'  reduce 92
+	tEQ  reduce 92
+	tNE  reduce 92
+	tGE  reduce 92
+	tLE  reduce 92
+	'>'  reduce 92
+	'<'  reduce 92
+	')'  reduce 92
+	']'  reduce 92
+	';'  reduce 92
+	','  reduce 92
+
+
+state 118
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr '<' expr .  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	$end  reduce 91
+	tDO  reduce 91
+	tUNTIL  reduce 91
+	tTHEN  reduce 91
+	tELSIF  reduce 91
+	tEND_BLOCK  reduce 91
+	tENDLINE  reduce 91
+	tELSE  reduce 91
+	'|'  reduce 91
+	'&'  reduce 91
+	tPN  reduce 91
+	'!'  reduce 91
+	tEQ  reduce 91
+	tNE  reduce 91
+	tGE  reduce 91
+	tLE  reduce 91
+	'>'  reduce 91
+	'<'  reduce 91
+	')'  reduce 91
+	']'  reduce 91
+	';'  reduce 91
+	','  reduce 91
+
+
+state 119
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr '+' expr .  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	$end  reduce 86
+	tDO  reduce 86
+	tUNTIL  reduce 86
+	tTHEN  reduce 86
+	tELSIF  reduce 86
+	tEND_BLOCK  reduce 86
+	tENDLINE  reduce 86
+	tELSE  reduce 86
+	'|'  reduce 86
+	'&'  reduce 86
+	tPN  reduce 86
+	'!'  reduce 86
+	tEQ  reduce 86
+	tNE  reduce 86
+	tGE  reduce 86
+	tLE  reduce 86
+	'>'  reduce 86
+	'<'  reduce 86
+	'+'  reduce 86
+	'-'  reduce 86
+	')'  reduce 86
+	']'  reduce 86
+	';'  reduce 86
+	','  reduce 86
+
+
+state 120
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr '-' expr .  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	$end  reduce 87
+	tDO  reduce 87
+	tUNTIL  reduce 87
+	tTHEN  reduce 87
+	tELSIF  reduce 87
+	tEND_BLOCK  reduce 87
+	tENDLINE  reduce 87
+	tELSE  reduce 87
+	'|'  reduce 87
+	'&'  reduce 87
+	tPN  reduce 87
+	'!'  reduce 87
+	tEQ  reduce 87
+	tNE  reduce 87
+	tGE  reduce 87
+	tLE  reduce 87
+	'>'  reduce 87
+	'<'  reduce 87
+	'+'  reduce 87
+	'-'  reduce 87
+	')'  reduce 87
+	']'  reduce 87
+	';'  reduce 87
+	','  reduce 87
+
+
+state 121
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr '*' expr .  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	'^'  shift 93
+	'?'  shift 94
+	$end  reduce 88
+	tDO  reduce 88
+	tUNTIL  reduce 88
+	tTHEN  reduce 88
+	tELSIF  reduce 88
+	tEND_BLOCK  reduce 88
+	tENDLINE  reduce 88
+	tELSE  reduce 88
+	'|'  reduce 88
+	'&'  reduce 88
+	tPN  reduce 88
+	'!'  reduce 88
+	tEQ  reduce 88
+	tNE  reduce 88
+	tGE  reduce 88
+	tLE  reduce 88
+	'>'  reduce 88
+	'<'  reduce 88
+	'+'  reduce 88
+	'-'  reduce 88
+	'*'  reduce 88
+	'/'  reduce 88
+	'%'  reduce 88
+	')'  reduce 88
+	']'  reduce 88
+	';'  reduce 88
+	','  reduce 88
+
+
+state 122
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr '/' expr .  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	'^'  shift 93
+	'?'  shift 94
+	$end  reduce 89
+	tDO  reduce 89
+	tUNTIL  reduce 89
+	tTHEN  reduce 89
+	tELSIF  reduce 89
+	tEND_BLOCK  reduce 89
+	tENDLINE  reduce 89
+	tELSE  reduce 89
+	'|'  reduce 89
+	'&'  reduce 89
+	tPN  reduce 89
+	'!'  reduce 89
+	tEQ  reduce 89
+	tNE  reduce 89
+	tGE  reduce 89
+	tLE  reduce 89
+	'>'  reduce 89
+	'<'  reduce 89
+	'+'  reduce 89
+	'-'  reduce 89
+	'*'  reduce 89
+	'/'  reduce 89
+	'%'  reduce 89
+	')'  reduce 89
+	']'  reduce 89
+	';'  reduce 89
+	','  reduce 89
+
+
+state 123
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr '%' expr .  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	'^'  shift 93
+	'?'  shift 94
+	$end  reduce 90
+	tDO  reduce 90
+	tUNTIL  reduce 90
+	tTHEN  reduce 90
+	tELSIF  reduce 90
+	tEND_BLOCK  reduce 90
+	tENDLINE  reduce 90
+	tELSE  reduce 90
+	'|'  reduce 90
+	'&'  reduce 90
+	tPN  reduce 90
+	'!'  reduce 90
+	tEQ  reduce 90
+	tNE  reduce 90
+	tGE  reduce 90
+	tLE  reduce 90
+	'>'  reduce 90
+	'<'  reduce 90
+	'+'  reduce 90
+	'-'  reduce 90
+	'*'  reduce 90
+	'/'  reduce 90
+	'%'  reduce 90
+	')'  reduce 90
+	']'  reduce 90
+	';'  reduce 90
+	','  reduce 90
+
+
+state 124
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+	expr : expr '^' expr .  (101)
+
+	'^'  shift 93
+	'?'  shift 94
+	$end  reduce 101
+	tDO  reduce 101
+	tUNTIL  reduce 101
+	tTHEN  reduce 101
+	tELSIF  reduce 101
+	tEND_BLOCK  reduce 101
+	tENDLINE  reduce 101
+	tELSE  reduce 101
+	'|'  reduce 101
+	'&'  reduce 101
+	tPN  reduce 101
+	'!'  reduce 101
+	tEQ  reduce 101
+	tNE  reduce 101
+	tGE  reduce 101
+	tLE  reduce 101
+	'>'  reduce 101
+	'<'  reduce 101
+	'+'  reduce 101
+	'-'  reduce 101
+	'*'  reduce 101
+	'/'  reduce 101
+	'%'  reduce 101
+	')'  reduce 101
+	']'  reduce 101
+	';'  reduce 101
+	','  reduce 101
+
+
+state 125
+	funct : type tIDENTIFIER '(' varlist ')' fret .  (14)
+	funct : type tIDENTIFIER '(' varlist ')' fret . block  (15)
+
+	tSTART_BLOCK  shift 96
+	$end  reduce 14
+	tEND_BLOCK  reduce 14
+	tENDLINE  reduce 14
+
+	block  goto 152
+
+
+state 126
+	funct : type tIDENTIFIER '(' varlist ')' block .  (16)
+
+	.  reduce 16
+
+
+state 127
+	stmt : tWHILE . expr tDO stmt  (52)
+	stmt : tWHILE . expr tDO stmt tELSE stmt  (53)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 153
+
+
+state 128
+	stmt : tFOR . expr ';' expr ';' expr tDO stmt  (54)
+	stmt : tFOR . varlist ';' expr ';' expr tDO stmt  (55)
+	varlist : .  (72)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	tUSE  shift 1
+	tPUBLIC  shift 2
+	tTYPEINT  shift 3
+	tTYPEREAL  shift 4
+	tTYPESTRING  shift 5
+	'<'  shift 7
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'['  shift 8
+	'@'  shift 59
+	';'  reduce 72
+	','  reduce 72
+
+	string  goto 60
+	var  goto 43
+	varlist  goto 154
+	qualif  goto 45
+	expr  goto 155
+	type  goto 46
+	spectype  goto 15
+
+
+state 129
+	stmt : tDO . stmt tUNTIL expr  (56)
+	stmt : tDO . stmt tUNTIL expr tELSE stmt  (57)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	tWHILE  shift 127
+	tFOR  shift 128
+	tDO  shift 129
+	tIF  shift 130
+	tRETURN  shift 131
+	tNEXT  shift 132
+	tSTOP  shift 133
+	tSTART_BLOCK  shift 96
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	stmt  goto 156
+	expr  goto 137
+	block  goto 138
+
+
+state 130
+	stmt : tIF . expr tTHEN stmt  (64)
+	stmt : tIF . expr tTHEN stmt tELSE stmt  (65)
+	stmt : tIF . expr tTHEN stmt elsif  (66)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 157
+
+
+state 131
+	stmt : tRETURN .  (59)
+
+	.  reduce 59
+
+
+state 132
+	stmt : tNEXT .  (60)
+	stmt : tNEXT . tINTEGER  (62)
+
+	tINTEGER  shift 158
+	tUNTIL  reduce 60
+	tELSIF  reduce 60
+	tEND_BLOCK  reduce 60
+	tENDLINE  reduce 60
+	tELSE  reduce 60
+
+
+state 133
+	stmt : tSTOP .  (61)
+	stmt : tSTOP . tINTEGER  (63)
+
+	tINTEGER  shift 159
+	tUNTIL  reduce 61
+	tELSIF  reduce 61
+	tEND_BLOCK  reduce 61
+	tENDLINE  reduce 61
+	tELSE  reduce 61
+
+
+state 134
+	block : tSTART_BLOCK tEND_BLOCK .  (46)
+
+	.  reduce 46
+
+
+state 135
+	block : tSTART_BLOCK stmt . list tEND_BLOCK  (45)
+	list : .  (76)
+
+	.  reduce 76
+
+	list  goto 160
+
+
+state 136
+	block : tSTART_BLOCK decl . listd tENDLINE stmt list tEND_BLOCK  (43)
+	block : tSTART_BLOCK decl . listd tEND_BLOCK  (44)
+	listd : .  (47)
+
+	.  reduce 47
+
+	listd  goto 161
+
+
+state 137
+	stmt : expr . tPN  (49)
+	stmt : expr . '!'  (50)
+	stmt : expr .  (51)
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	'|'  shift 80
+	'&'  shift 81
+	tPN  shift 162
+	'!'  shift 163
+	tEQ  shift 82
+	tNE  shift 83
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	tUNTIL  reduce 51
+	tELSIF  reduce 51
+	tEND_BLOCK  reduce 51
+	tENDLINE  reduce 51
+	tELSE  reduce 51
+
+
+state 138
+	stmt : block .  (58)
+
+	.  reduce 58
+
+
+state 139
+	literal : tINTEGER .  (39)
+
+	.  reduce 39
+
+
+state 140
+	literal : tREAL .  (38)
+
+	.  reduce 38
+
+
+state 141
+	literal : string .  (40)
+	string : string . tSTRING  (42)
+
+	tSTRING  shift 79
+	$end  reduce 40
+	tSTART_BLOCK  reduce 40
+	tEND_BLOCK  reduce 40
+	tENDLINE  reduce 40
+
+
+state 142
+	fret : '=' literal .  (37)
+
+	.  reduce 37
+
+
+state 143
+	funct : tVOID tIDENTIFIER '(' varlist ')' fret block .  (21)
+
+	.  reduce 21
+
+
+state 144
+	funct : qualif tVOID tIDENTIFIER '(' varlist ')' fret .  (17)
+	funct : qualif tVOID tIDENTIFIER '(' varlist ')' fret . block  (18)
+
+	tSTART_BLOCK  shift 96
+	$end  reduce 17
+	tEND_BLOCK  reduce 17
+	tENDLINE  reduce 17
+
+	block  goto 164
+
+
+state 145
+	funct : qualif tVOID tIDENTIFIER '(' varlist ')' block .  (19)
+
+	.  reduce 19
+
+
+state 146
+	funct : qualif type tIDENTIFIER '(' varlist ')' fret .  (11)
+	funct : qualif type tIDENTIFIER '(' varlist ')' fret . block  (12)
+
+	tSTART_BLOCK  shift 96
+	$end  reduce 11
+	tEND_BLOCK  reduce 11
+	tENDLINE  reduce 11
+
+	block  goto 165
+
+
+state 147
+	funct : qualif type tIDENTIFIER '(' varlist ')' block .  (13)
+
+	.  reduce 13
+
+
+state 148
+	expr : tIDENTIFIER '(' exprlist ')' .  (102)
+
+	.  reduce 102
+
+
+state 149
+	exprlist : exprlist ',' . expr  (73)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 166
+
+
+state 150
+	expr : tIDENTIFIER '[' expr ']' .  (105)
+	expr : tIDENTIFIER '[' expr ']' . '=' expr  (106)
+
+	'='  shift 167
+	$end  reduce 105
+	tDO  reduce 105
+	tUNTIL  reduce 105
+	tTHEN  reduce 105
+	tELSIF  reduce 105
+	tEND_BLOCK  reduce 105
+	tENDLINE  reduce 105
+	tELSE  reduce 105
+	'|'  reduce 105
+	'&'  reduce 105
+	tPN  reduce 105
+	'!'  reduce 105
+	tEQ  reduce 105
+	tNE  reduce 105
+	tGE  reduce 105
+	tLE  reduce 105
+	'>'  reduce 105
+	'<'  reduce 105
+	'+'  reduce 105
+	'-'  reduce 105
+	'*'  reduce 105
+	'/'  reduce 105
+	'%'  reduce 105
+	'^'  reduce 105
+	'?'  reduce 105
+	')'  reduce 105
+	']'  reduce 105
+	';'  reduce 105
+	','  reduce 105
+
+
+state 151
+	expr : '@' '(' exprlist ')' .  (104)
+
+	.  reduce 104
+
+
+state 152
+	funct : type tIDENTIFIER '(' varlist ')' fret block .  (15)
+
+	.  reduce 15
+
+
+state 153
+	stmt : tWHILE expr . tDO stmt  (52)
+	stmt : tWHILE expr . tDO stmt tELSE stmt  (53)
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	tDO  shift 168
+	'|'  shift 80
+	'&'  shift 81
+	tEQ  shift 82
+	tNE  shift 83
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	.  error
+
+
+state 154
+	stmt : tFOR varlist . ';' expr ';' expr tDO stmt  (55)
+	varlist : varlist . ',' var  (71)
+
+	';'  shift 169
+	','  shift 64
+	.  error
+
+
+state 155
+	stmt : tFOR expr . ';' expr ';' expr tDO stmt  (54)
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	'|'  shift 80
+	'&'  shift 81
+	tEQ  shift 82
+	tNE  shift 83
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	';'  shift 170
+	.  error
+
+
+state 156
+	stmt : tDO stmt . tUNTIL expr  (56)
+	stmt : tDO stmt . tUNTIL expr tELSE stmt  (57)
+
+	tUNTIL  shift 171
+	.  error
+
+
+state 157
+	stmt : tIF expr . tTHEN stmt  (64)
+	stmt : tIF expr . tTHEN stmt tELSE stmt  (65)
+	stmt : tIF expr . tTHEN stmt elsif  (66)
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	tTHEN  shift 172
+	'|'  shift 80
+	'&'  shift 81
+	tEQ  shift 82
+	tNE  shift 83
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	.  error
+
+
+state 158
+	stmt : tNEXT tINTEGER .  (62)
+
+	.  reduce 62
+
+
+state 159
+	stmt : tSTOP tINTEGER .  (63)
+
+	.  reduce 63
+
+
+state 160
+	block : tSTART_BLOCK stmt list . tEND_BLOCK  (45)
+	list : list . tENDLINE stmt  (77)
+
+	tEND_BLOCK  shift 173
+	tENDLINE  shift 174
+	.  error
+
+
+state 161
+	block : tSTART_BLOCK decl listd . tENDLINE stmt list tEND_BLOCK  (43)
+	block : tSTART_BLOCK decl listd . tEND_BLOCK  (44)
+	listd : listd . tENDLINE decl  (48)
+
+	tEND_BLOCK  shift 175
+	tENDLINE  shift 176
+	.  error
+
+
+state 162
+	stmt : expr tPN .  (49)
+
+	.  reduce 49
+
+
+state 163
+	stmt : expr '!' .  (50)
+
+	.  reduce 50
+
+
+state 164
+	funct : qualif tVOID tIDENTIFIER '(' varlist ')' fret block .  (18)
+
+	.  reduce 18
+
+
+state 165
+	funct : qualif type tIDENTIFIER '(' varlist ')' fret block .  (12)
+
+	.  reduce 12
+
+
+state 166
+	exprlist : exprlist ',' expr .  (73)
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	'|'  shift 80
+	'&'  shift 81
+	tEQ  shift 82
+	tNE  shift 83
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	')'  reduce 73
+	','  reduce 73
+
+
+state 167
+	expr : tIDENTIFIER '[' expr ']' '=' . expr  (106)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 177
+
+
+state 168
+	stmt : tWHILE expr tDO . stmt  (52)
+	stmt : tWHILE expr tDO . stmt tELSE stmt  (53)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	tWHILE  shift 127
+	tFOR  shift 128
+	tDO  shift 129
+	tIF  shift 130
+	tRETURN  shift 131
+	tNEXT  shift 132
+	tSTOP  shift 133
+	tSTART_BLOCK  shift 96
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	stmt  goto 178
+	expr  goto 137
+	block  goto 138
+
+
+state 169
+	stmt : tFOR varlist ';' . expr ';' expr tDO stmt  (55)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 179
+
+
+state 170
+	stmt : tFOR expr ';' . expr ';' expr tDO stmt  (54)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 180
+
+
+state 171
+	stmt : tDO stmt tUNTIL . expr  (56)
+	stmt : tDO stmt tUNTIL . expr tELSE stmt  (57)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 181
+
+
+state 172
+	stmt : tIF expr tTHEN . stmt  (64)
+	stmt : tIF expr tTHEN . stmt tELSE stmt  (65)
+	stmt : tIF expr tTHEN . stmt elsif  (66)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	tWHILE  shift 127
+	tFOR  shift 128
+	tDO  shift 129
+	tIF  shift 130
+	tRETURN  shift 131
+	tNEXT  shift 132
+	tSTOP  shift 133
+	tSTART_BLOCK  shift 96
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	stmt  goto 182
+	expr  goto 137
+	block  goto 138
+
+
+state 173
+	block : tSTART_BLOCK stmt list tEND_BLOCK .  (45)
+
+	.  reduce 45
+
+
+state 174
+	list : list tENDLINE . stmt  (77)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	tWHILE  shift 127
+	tFOR  shift 128
+	tDO  shift 129
+	tIF  shift 130
+	tRETURN  shift 131
+	tNEXT  shift 132
+	tSTOP  shift 133
+	tSTART_BLOCK  shift 96
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	stmt  goto 183
+	expr  goto 137
+	block  goto 138
+
+
+state 175
+	block : tSTART_BLOCK decl listd tEND_BLOCK .  (44)
+
+	.  reduce 44
+
+
+state 176
+	block : tSTART_BLOCK decl listd tENDLINE . stmt list tEND_BLOCK  (43)
+	listd : listd tENDLINE . decl  (48)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	tWHILE  shift 127
+	tFOR  shift 128
+	tDO  shift 129
+	tIF  shift 130
+	tUSE  shift 1
+	tPUBLIC  shift 2
+	tRETURN  shift 131
+	tNEXT  shift 132
+	tSTOP  shift 133
+	tTYPEINT  shift 3
+	tTYPEREAL  shift 4
+	tTYPESTRING  shift 5
+	tVOID  shift 6
+	tSTART_BLOCK  shift 96
+	'<'  shift 7
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'['  shift 8
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	stmt  goto 184
+	decl  goto 47
+	funct  goto 11
+	var  goto 12
+	qualif  goto 13
+	expr  goto 137
+	block  goto 138
+	type  goto 14
+	spectype  goto 15
+
+
+state 177
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+	expr : tIDENTIFIER '[' expr ']' '=' expr .  (106)
+
+	'|'  shift 80
+	'&'  shift 81
+	tEQ  shift 82
+	tNE  shift 83
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	$end  reduce 106
+	tDO  reduce 106
+	tUNTIL  reduce 106
+	tTHEN  reduce 106
+	tELSIF  reduce 106
+	tEND_BLOCK  reduce 106
+	tENDLINE  reduce 106
+	tELSE  reduce 106
+	tPN  reduce 106
+	'!'  reduce 106
+	')'  reduce 106
+	']'  reduce 106
+	';'  reduce 106
+	','  reduce 106
+
+
+state 178
+	stmt : tWHILE expr tDO stmt .  (52)
+	stmt : tWHILE expr tDO stmt . tELSE stmt  (53)
+
+	tELSE  shift 185
+	tUNTIL  reduce 52
+	tELSIF  reduce 52
+	tEND_BLOCK  reduce 52
+	tENDLINE  reduce 52
+
+
+state 179
+	stmt : tFOR varlist ';' expr . ';' expr tDO stmt  (55)
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	'|'  shift 80
+	'&'  shift 81
+	tEQ  shift 82
+	tNE  shift 83
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	';'  shift 186
+	.  error
+
+
+state 180
+	stmt : tFOR expr ';' expr . ';' expr tDO stmt  (54)
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	'|'  shift 80
+	'&'  shift 81
+	tEQ  shift 82
+	tNE  shift 83
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	';'  shift 187
+	.  error
+
+
+state 181
+	stmt : tDO stmt tUNTIL expr .  (56)
+	stmt : tDO stmt tUNTIL expr . tELSE stmt  (57)
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	tELSE  shift 188
+	'|'  shift 80
+	'&'  shift 81
+	tEQ  shift 82
+	tNE  shift 83
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	tUNTIL  reduce 56
+	tELSIF  reduce 56
+	tEND_BLOCK  reduce 56
+	tENDLINE  reduce 56
+
+
+state 182
+	stmt : tIF expr tTHEN stmt .  (64)
+	stmt : tIF expr tTHEN stmt . tELSE stmt  (65)
+	stmt : tIF expr tTHEN stmt . elsif  (66)
+
+	tELSIF  shift 189
+	tELSE  shift 190
+	tUNTIL  reduce 64
+	tEND_BLOCK  reduce 64
+	tENDLINE  reduce 64
+
+	elsif  goto 191
+
+
+state 183
+	list : list tENDLINE stmt .  (77)
+
+	.  reduce 77
+
+
+state 184
+	block : tSTART_BLOCK decl listd tENDLINE stmt . list tEND_BLOCK  (43)
+	list : .  (76)
+
+	.  reduce 76
+
+	list  goto 192
+
+
+state 185
+	stmt : tWHILE expr tDO stmt tELSE . stmt  (53)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	tWHILE  shift 127
+	tFOR  shift 128
+	tDO  shift 129
+	tIF  shift 130
+	tRETURN  shift 131
+	tNEXT  shift 132
+	tSTOP  shift 133
+	tSTART_BLOCK  shift 96
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	stmt  goto 193
+	expr  goto 137
+	block  goto 138
+
+
+state 186
+	stmt : tFOR varlist ';' expr ';' . expr tDO stmt  (55)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 194
+
+
+state 187
+	stmt : tFOR expr ';' expr ';' . expr tDO stmt  (54)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 195
+
+
+state 188
+	stmt : tDO stmt tUNTIL expr tELSE . stmt  (57)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	tWHILE  shift 127
+	tFOR  shift 128
+	tDO  shift 129
+	tIF  shift 130
+	tRETURN  shift 131
+	tNEXT  shift 132
+	tSTOP  shift 133
+	tSTART_BLOCK  shift 96
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	stmt  goto 196
+	expr  goto 137
+	block  goto 138
+
+
+state 189
+	elsif : tELSIF . expr tTHEN stmt elsif  (67)
+	elsif : tELSIF . expr tTHEN stmt  (68)
+	elsif : tELSIF . expr tTHEN stmt tELSE stmt  (69)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	expr  goto 197
+
+
+state 190
+	stmt : tIF expr tTHEN stmt tELSE . stmt  (65)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	tWHILE  shift 127
+	tFOR  shift 128
+	tDO  shift 129
+	tIF  shift 130
+	tRETURN  shift 131
+	tNEXT  shift 132
+	tSTOP  shift 133
+	tSTART_BLOCK  shift 96
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	stmt  goto 198
+	expr  goto 137
+	block  goto 138
+
+
+state 191
+	stmt : tIF expr tTHEN stmt elsif .  (66)
+
+	.  reduce 66
+
+
+state 192
+	block : tSTART_BLOCK decl listd tENDLINE stmt list . tEND_BLOCK  (43)
+	list : list . tENDLINE stmt  (77)
+
+	tEND_BLOCK  shift 199
+	tENDLINE  shift 174
+	.  error
+
+
+state 193
+	stmt : tWHILE expr tDO stmt tELSE stmt .  (53)
+
+	.  reduce 53
+
+
+state 194
+	stmt : tFOR varlist ';' expr ';' expr . tDO stmt  (55)
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	tDO  shift 200
+	'|'  shift 80
+	'&'  shift 81
+	tEQ  shift 82
+	tNE  shift 83
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	.  error
+
+
+state 195
+	stmt : tFOR expr ';' expr ';' expr . tDO stmt  (54)
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	tDO  shift 201
+	'|'  shift 80
+	'&'  shift 81
+	tEQ  shift 82
+	tNE  shift 83
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	.  error
+
+
+state 196
+	stmt : tDO stmt tUNTIL expr tELSE stmt .  (57)
+
+	.  reduce 57
+
+
+state 197
+	elsif : tELSIF expr . tTHEN stmt elsif  (67)
+	elsif : tELSIF expr . tTHEN stmt  (68)
+	elsif : tELSIF expr . tTHEN stmt tELSE stmt  (69)
+	expr : expr . '?'  (85)
+	expr : expr . '+' expr  (86)
+	expr : expr . '-' expr  (87)
+	expr : expr . '*' expr  (88)
+	expr : expr . '/' expr  (89)
+	expr : expr . '%' expr  (90)
+	expr : expr . '<' expr  (91)
+	expr : expr . '>' expr  (92)
+	expr : expr . tGE expr  (93)
+	expr : expr . tLE expr  (94)
+	expr : expr . tNE expr  (95)
+	expr : expr . tEQ expr  (96)
+	expr : expr . '|' expr  (97)
+	expr : expr . '&' expr  (98)
+	expr : expr . '^' expr  (101)
+
+	tTHEN  shift 202
+	'|'  shift 80
+	'&'  shift 81
+	tEQ  shift 82
+	tNE  shift 83
+	tGE  shift 84
+	tLE  shift 85
+	'>'  shift 86
+	'<'  shift 87
+	'+'  shift 88
+	'-'  shift 89
+	'*'  shift 90
+	'/'  shift 91
+	'%'  shift 92
+	'^'  shift 93
+	'?'  shift 94
+	.  error
+
+
+state 198
+	stmt : tIF expr tTHEN stmt tELSE stmt .  (65)
+
+	.  reduce 65
+
+
+state 199
+	block : tSTART_BLOCK decl listd tENDLINE stmt list tEND_BLOCK .  (43)
+
+	.  reduce 43
+
+
+state 200
+	stmt : tFOR varlist ';' expr ';' expr tDO . stmt  (55)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	tWHILE  shift 127
+	tFOR  shift 128
+	tDO  shift 129
+	tIF  shift 130
+	tRETURN  shift 131
+	tNEXT  shift 132
+	tSTOP  shift 133
+	tSTART_BLOCK  shift 96
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	stmt  goto 203
+	expr  goto 137
+	block  goto 138
+
+
+state 201
+	stmt : tFOR expr ';' expr ';' expr tDO . stmt  (54)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	tWHILE  shift 127
+	tFOR  shift 128
+	tDO  shift 129
+	tIF  shift 130
+	tRETURN  shift 131
+	tNEXT  shift 132
+	tSTOP  shift 133
+	tSTART_BLOCK  shift 96
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	stmt  goto 204
+	expr  goto 137
+	block  goto 138
+
+
+state 202
+	elsif : tELSIF expr tTHEN . stmt elsif  (67)
+	elsif : tELSIF expr tTHEN . stmt  (68)
+	elsif : tELSIF expr tTHEN . stmt tELSE stmt  (69)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	tWHILE  shift 127
+	tFOR  shift 128
+	tDO  shift 129
+	tIF  shift 130
+	tRETURN  shift 131
+	tNEXT  shift 132
+	tSTOP  shift 133
+	tSTART_BLOCK  shift 96
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	stmt  goto 205
+	expr  goto 137
+	block  goto 138
+
+
+state 203
+	stmt : tFOR varlist ';' expr ';' expr tDO stmt .  (55)
+
+	.  reduce 55
+
+
+state 204
+	stmt : tFOR expr ';' expr ';' expr tDO stmt .  (54)
+
+	.  reduce 54
+
+
+state 205
+	elsif : tELSIF expr tTHEN stmt . elsif  (67)
+	elsif : tELSIF expr tTHEN stmt .  (68)
+	elsif : tELSIF expr tTHEN stmt . tELSE stmt  (69)
+
+	tELSIF  shift 189
+	tELSE  shift 206
+	tUNTIL  reduce 68
+	tEND_BLOCK  reduce 68
+	tENDLINE  reduce 68
+
+	elsif  goto 207
+
+
+state 206
+	elsif : tELSIF expr tTHEN stmt tELSE . stmt  (69)
+
+	tINTEGER  shift 51
+	tREAL  shift 52
+	tIDENTIFIER  shift 53
+	tSTRING  shift 54
+	tWHILE  shift 127
+	tFOR  shift 128
+	tDO  shift 129
+	tIF  shift 130
+	tRETURN  shift 131
+	tNEXT  shift 132
+	tSTOP  shift 133
+	tSTART_BLOCK  shift 96
+	'+'  shift 55
+	'-'  shift 56
+	'#'  shift 57
+	'('  shift 58
+	'@'  shift 59
+	.  error
+
+	string  goto 60
+	stmt  goto 208
+	expr  goto 137
+	block  goto 138
+
+
+state 207
+	elsif : tELSIF expr tTHEN stmt elsif .  (67)
+
+	.  reduce 67
+
+
+state 208
+	elsif : tELSIF expr tTHEN stmt tELSE stmt .  (69)
+
+	.  reduce 69
+
+
+69 terminals, 19 nonterminals
+108 grammar rules, 209 states

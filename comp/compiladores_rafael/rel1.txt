@@ -1,0 +1,10 @@
+Alunos:	Denise Pedro
+		Rafael Reia
+		
+Nesta entrega corrigimos os erros que tinhamos na entrega 0, nomeadamente apagar a classe Program Node que
+não fazia nada, corrigir os problemas relativos às funções (ou seja, criámos as classes de chamada, decla-
+ração e definição da função), apagámos a classe ExpressionBlock pois esta não era necessária e também a 
+classe Identity.
+
+Concluimos o XMLwriter, criámos a gramática da linguagem no yacc e preenchemos as respectivas regras no Lex. 
+Não conseguimos corrigir os erros de Segmentation Fault ligados à parte do Lex que trata da Identação.
