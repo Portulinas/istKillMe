@@ -17,7 +17,7 @@
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
 
-        <wsdl.directory>${basedir}/../transporter-ws/src/main/resources</wsdl.directory>
+        <wsdl.directory>C:\Users\istKillMe\sd\A_24-project\transporter-ws\src\main\resources</wsdl.directory>
         <wsdl.filename>transporter.1_0.wsdl</wsdl.filename>
 
         <mainclass>pt.upa.transporter.TransporterClientApplication</mainclass>

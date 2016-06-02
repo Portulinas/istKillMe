@@ -1,7 +1,5 @@
 This is a Java application that contains several cryptography examples.
 
-ListAlgos queries the Java runtime for a list of all available encryption and digest algorithms.
-
 SymCrypto generates a key and uses it to cipher and decipher data.
  
 ASymCrypto generates a key pair and uses the public key to cipher and
@@ -16,6 +14,9 @@ show data integrity verifications.
 
 The Digital Signature examples demonstrate 
 data signing and verification.
+The X.509 example demonstrates how to use key stores and 
+standard public key digital certificates 
+(.jks and .cer files, respectively).
 
 The Keys Write/Read examples show how to 
 read and write cryptographic keys to and from files.
@@ -61,5 +62,5 @@ To run:
 
 
 --
-Revision date: 2016-04-09
+Revision date: 2016-04-26
 leic-sod@disciplinas.tecnico.ulisboa.pt
