@@ -1,6 +1,6 @@
 <?
-	$connection = mysql_connect("db.ist.utl.pt","ist179112","password");
-	$db = mysql_select_db("ist179112",$connection);
+	$connection = mysql_connect("database url","username ","password");
+	$db = mysql_select_db("use db",$connection);
 	
 	session_start();
 	
@@ -17,9 +17,9 @@
 	
 	try
     {
-        $host = "db.ist.utl.pt";
-        $user ="ist179112";
-        $password = "base_dados2015";
+        $host = "bla.bla.bla.pt";
+        $user ="username";
+        $password = "password";
         $dbname = $user;
     
         $db = new PDO("mysql:host=$host;dbname=$dbname", $user, $password);
