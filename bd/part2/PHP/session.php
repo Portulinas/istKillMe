@@ -1,5 +1,5 @@
 <?
-	$connection = mysql_connect("db.ist.utl.pt","ist179112","base_dados2015");
+	$connection = mysql_connect("db.ist.utl.pt","ist179112","password");
 	$db = mysql_select_db("ist179112",$connection);
 	
 	session_start();
