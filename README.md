@@ -4,7 +4,7 @@
 
 ### About 
 
-The provided name of this repository is because of the hard times that we had while doing them. Don't be afraid, they don't bite anymore but  they can have some little bugs and I don't recommend to copy any work from here, instead you should try to understand the concepts and the ideas behind the work to start your project.
+The name of this repository is because of the hard times that we had while doing them. Don't be afraid, they don't bite anymore but  they can have some little bugs and I don't recommend to copy any work from here, instead you should try to understand the concepts and the ideas behind the work to start your project.
 If you want to talk about the work provided here, or simply talk about something you are considering as a project and want my help, to not hesitate and send me an email (goncalo.f.pires@ist.ulisboa.pt).
 
 
